@@ -35,7 +35,7 @@ function updateStopWatches(){
     for (let i=0; i<collection.timer.length; i++){
       if(collection.timer[i].returnDeleteTag() === false){
         id = collection.timer[i].returnID();
-        document.getElementById(id+"p").innerHTML = collection.timer[i].update(Date.now(), "html");
+        document.getElementById(id+"h1").innerHTML = collection.timer[i].update(Date.now(), "html");
       }
       else if (collection.timer[i].returnDeleteTag() === true){
         collection.timer.splice(i, 1);
@@ -100,8 +100,9 @@ function addNewTimer(){
 //Creates all a new p and fills with the buttons for a timer
 //Also creates the p tag for the timer time to go in.
 function drawNewTimer(id){
-  let newDiv = document.createElement("p");
+  let newDiv = document.createElement("div");
   newDiv.id = id;
+  newDiv.className = "child";
 
   let startbutton = document.createElement("input");
   startbutton.type="button";
@@ -127,20 +128,20 @@ function drawNewTimer(id){
   deletebutton.id= id;
   deletebutton.addEventListener("click", function() {deleteTimer(id)}, false);
 
-  let timeDisplay = document.createElement("p");
-  timeDisplay.id=id+"p";
+  let timeDisplay = document.createElement("h1");
+  timeDisplay.id=id+"h1";
   timeDisplay.innerHTML = id;
 
-  //Add all new items to the previous p tag
+  //Add all new items to the previous div tag
+  newDiv.appendChild(timeDisplay);
   newDiv.appendChild(startbutton);
   newDiv.appendChild(pausebutton);
   newDiv.appendChild(resumebutton);
   newDiv.appendChild(deletebutton);
-  newDiv.appendChild(timeDisplay);
-
+  
   //insert all into the page
   let currentDiv = document.getElementById("original");
-  document.body.insertBefore(newDiv, currentDiv);
+  document.getElementById("wrapper").insertBefore(newDiv, currentDiv);
 
   //Create Timer Object
   collection.timer.push(new stopWatch(id));
